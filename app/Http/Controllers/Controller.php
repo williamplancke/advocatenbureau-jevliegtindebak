@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,12 +15,18 @@ class Controller
         return DB::table('lawyers')->get();
     }
     function setAppointment(Request $request) {
-        $validator = Validator::make($request->all(), $this->getRules());
+        $validator = Validator::make($request->all(), $this->getAppointmentRules());
         if ($validator->fails()) {
             return response()-> json(['errors' => $validator->errors()],
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        return $validator->validated();
+        $appointment = new Appointment();
+        $appointment->datetime = $validator->validated()['datetime'];
+        $appointment->purpose = $validator->validated()['purpose'];
+        $appointment->lawyerId = $validator->validated()['lawyer']['id'];
+        $appointment->clientId = $validator->validated()['client']['id'];
+        $appointment->save();
+        return $appointment;
     }
     function getClientRules(){
         return [
