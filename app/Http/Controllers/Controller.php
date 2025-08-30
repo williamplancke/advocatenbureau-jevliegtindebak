@@ -21,12 +21,21 @@ class Controller
         }
         return $validator->validated();
     }
-    function getRules(){
+    function getClientRules(){
         return [
             'firstname' => 'required|string|min:2|max:255',
             'lastname' => 'required|string|min:2|max:255',
             'email' => 'email:rfc',
             'phone' => 'integer'
+            
+        ];
+    }
+    function getAppointmentRules() {
+        return [
+            'lawyer.id' => 'required|exists:lawyers,id',
+            'client.id' => 'required|exists:clients,id',
+            'purpose' => 'required|string|max:255',
+            'datetime' => 'required|date'
         ];
     }
 }
