@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 class Controller
 {
     function getClients() {
@@ -10,6 +12,14 @@ class Controller
     }
     function getLawyers() {
         return DB::table('lawyers')->get();
+    }
+    function setAppointment(Request $request) {
+        $validator = Validator::make($request->all(), $this->getRules());
+        if ($validator->fails()) {
+            return response()-> json(['errors' => $validator->errors()],
+            Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        return $validator->validated();
     }
     function getRules(){
         return [
