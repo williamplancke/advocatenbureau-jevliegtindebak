@@ -26,7 +26,8 @@ class Controller
         $appointment->lawyerId = $validator->validated()['lawyer']['id'];
         $appointment->clientId = $validator->validated()['client']['id'];
         $appointment->save();
-        return $appointment;
+        $message = 'De afspraak is vastgelegd';
+        return json_encode($message);
     }
     function getClientRules(){
         return [
