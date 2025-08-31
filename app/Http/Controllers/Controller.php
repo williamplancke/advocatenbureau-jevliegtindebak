@@ -51,6 +51,14 @@ class Controller
         return json_encode('The appointment has been deleted succesfully');
         }
     }
+    function deleteClient(string $clientId) {
+        $deleted = DB::table('clients')->where(['id' => $clientId])->delete();
+        if ($deleted == 0) {
+            return json_encode("The requested client doesn't exist");
+        } else {
+        return json_encode('The client has been deleted succesfully');
+        }
+    }
     function getClientRules(){
         return [
             'firstname' => 'required|string|min:2|max:255',
