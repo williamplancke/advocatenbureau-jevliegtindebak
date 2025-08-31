@@ -43,6 +43,14 @@ class Controller
         $deleted = DB::table('appointments')->delete();
         return json_encode(implode(': ',['The following number of rows have been deleted',(string)$deleted]));
     }
+    function deleteAppointment(string $appointmentId) {
+        $deleted = DB::table('appointments')->where(['id' => $appointmentId])->delete();
+        if ($deleted == 0) {
+            return json_encode("The requested appointment doesn't exist");
+        } else {
+        return json_encode('The appointment has been deleted succesfully');
+        }
+    }
     function getClientRules(){
         return [
             'firstname' => 'required|string|min:2|max:255',
