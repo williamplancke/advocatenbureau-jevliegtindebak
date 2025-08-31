@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasUuids;
+    protected $casts = [
+        'clientId' => 'string',
+        'lawyerId' => 'string'
+    ];
 }

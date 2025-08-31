@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Appointment;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,6 +14,15 @@ class Controller
     }
     function getLawyers() {
         return DB::table('lawyers')->get();
+    }
+    function getAppointments(){
+        return DB::table('appointments')->get();
+    }
+    function getAppointmentByClient(string $clientId){
+        return DB::table('appointments')->where(['clientId' => $clientId])->get();
+    }
+    function getAppointmentByLawyer(string $lawyerId){
+        return DB::table('appointments')->where('lawyerId', '=', $lawyerId)->get();
     }
     function setAppointment(Request $request) {
         $validator = Validator::make($request->all(), $this->getAppointmentRules());

@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasUuids, HasFactory;
+    
+
 }
