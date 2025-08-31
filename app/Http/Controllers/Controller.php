@@ -39,6 +39,10 @@ class Controller
         $message = 'De afspraak is vastgelegd';
         return json_encode($message);
     }
+    function deleteAllAppointments (){
+        $deleted = DB::table('appointments')->delete();
+        return json_encode(implode(': ',['The following number of rows have been deleted',(string)$deleted]));
+    }
     function getClientRules(){
         return [
             'firstname' => 'required|string|min:2|max:255',
